@@ -7,6 +7,6 @@ RUN apt install default-jre -y
 
 ADD ./ /app/
 WORKDIR /app/
-RUN javac prj5bootstrap.java
+RUN javac prj5peer.java
 
-ENTRYPOINT ["java", "prj5bootstrap"]
+ENTRYPOINT ["java", "prj5peer"]
