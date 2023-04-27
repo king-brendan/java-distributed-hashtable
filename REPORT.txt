@@ -1,0 +1,29 @@
+-- GENERAL --
+I unfortunately was not able to finish this project - only part 1 is working. 
+
+-- SYSTEM ARCHITECTURE --
+The general architecture of this project is similar to the previous, with a Receiver class
+that handles new connections and spawns SingleHostReceiver threads to manage individual messages.
+The Sender class still manages creating new connections.
+
+-- STATE DIAGRAM --
+See the attached PDF. It only includes the part that I finished, which is part 1.
+
+-- DESIGN DECISIONS --
+When designing this project, I tried to design it using Java patterns such that I could reuse 
+as much code as possible. I think that this project lends itself well to that, because of the
+distinction (but similar functionality) between bootstrap/peer/client servers. To do this, I
+created a few interfaces/abstract classes for multi-use classes (state, SingleHostReceiver) and 
+designed the main flow of the code to accept each type. I think that this reduced code clutter,
+but was also harder to design and more brittle when I needed to change something in one
+implementation of the interface/abstract class and not the other.
+
+-- IMPLEMENTATION ISSUES --
+One issue I ran into was how Java doesn't allow for naming classes with dashes, meaning that I had 
+to change the testcase files to match the classnames I ended up using. This wasn't a huge issue.
+
+Another issue I ran into was some ConcurrentModificationExceptions I kept running into, when I tried
+to access the same shared ArrayList from different threads. This was something I ran into in the previous
+projects with HashMaps, but I managed to avoid them by instead using an Iterator instance the loop 
+through items instead of the built-in for each. This time around, I solved by using the CopyOnWriteArrayList
+class instead of ArrayList, which solved my issues. 
