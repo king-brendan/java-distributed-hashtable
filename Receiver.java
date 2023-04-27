@@ -23,7 +23,7 @@ public class Receiver extends Thread {
                     } else if (this.type.equals("peer")) {
                         shr = new PeerSHR((MyPeerState) state, s, hostname);
                     } else {
-                        // TODO
+                        System.out.println("not implemented");
                     }
                     shr.start();
                 }

@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import MessageTypes.Message;
 import MessageTypes.Neighbors;
 import MessageTypes.Pre;
+import MessageTypes.Request;
 import MessageTypes.Succ;
 
 public class BootstrapSHR extends SingleHostReceiver {
@@ -76,15 +77,9 @@ public class BootstrapSHR extends SingleHostReceiver {
         }
     }
 
-    void handleClientJoin() {
-        System.out.println("Client just joined... yippee skippee!");
-    }
-
     public void listen() throws UnknownHostException, IOException, InterruptedException {
         System.out.println("New peer joined: " + this.hostname);
-        if (this.hostname.equals("client")) {
-            handleClientJoin();
-        } else {
+        if (!this.hostname.equals("client")) {
             addMember();
             alertNeighbors();
         }
@@ -92,7 +87,9 @@ public class BootstrapSHR extends SingleHostReceiver {
         while (true) {
             try {
                 Message m = (Message) din.readObject();
-                System.out.println("Message received");
+                System.out.println("Message received from " + this.hostname + " " + m.type());
+                Request r = (Request) m;
+                System.out.println(r.operationType);
             } catch (IOException | ClassNotFoundException e) {
                 // silently cancel the thread if the TCP connection closes
                 return;

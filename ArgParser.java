@@ -4,6 +4,9 @@ public class ArgParser {
             if (args[i].equals("-d")) {
                 state.delay = Integer.parseInt(args[i + 1]);
             }
+            if (args[i].equals("-t")) {
+                state.testcase = Integer.parseInt(args[i + 1]);
+            }
         }
     }
 }

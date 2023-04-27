@@ -1,10 +1,12 @@
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import MessageTypes.Message;
 import MessageTypes.Neighbors;
 import MessageTypes.Pre;
+import MessageTypes.Request;
 import MessageTypes.Succ;
 
 public class PeerSHR extends SingleHostReceiver {
@@ -16,7 +18,7 @@ public class PeerSHR extends SingleHostReceiver {
         this.hostname = hostname;
     }
 
-    public void listen() {
+    public void listen() throws UnknownHostException, IOException, InterruptedException {
         while (true) {
             try {
                 Message m = null;

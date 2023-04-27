@@ -10,17 +10,17 @@ public class prj5client {
         Thread.sleep(state.delay * 1000);
         System.out.println("Starting client server...");
 
-        Sender sender = new Sender(state, "bootstrap");
-        sender.start();
+        Sender bootstrapSender = new Sender(state, "bootstrap");
+        bootstrapSender.start();
+        state.bootstrapSender = bootstrapSender;
 
-        while (!sender.connectionSuccessful) {
+        while (!bootstrapSender.connectionSuccessful) {
             Thread.sleep(200);
         }
 
-        System.out.println("Boutta start this test case!");
-        return;
+        ClientTestCases.initialize(state);
 
-        // Receiver r = new Receiver(state);
-        // r.start();
+        Receiver r = new Receiver(state);
+        r.start();
     }
 }

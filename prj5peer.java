@@ -14,6 +14,7 @@ public class prj5peer {
         System.out.println("Starting peer server...");
 
         Sender sender = new Sender(state, "bootstrap");
+        state.bootstrapSender = sender;
         sender.start();
 
         Receiver r = new Receiver(state);
