@@ -7,6 +7,13 @@ public class ArgParser {
             if (args[i].equals("-t")) {
                 state.testcase = Integer.parseInt(args[i + 1]);
             }
+            if (args[i].equals("-o")) {
+                state.objectsFile = args[i + 1];
+            }
         }
+    }
+
+    public static Integer hostnameToID(String hostname) {
+        return Integer.parseInt(hostname.substring(1));
     }
 }
