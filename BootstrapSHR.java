@@ -76,10 +76,18 @@ public class BootstrapSHR extends SingleHostReceiver {
         }
     }
 
+    void handleClientJoin() {
+        System.out.println("Client just joined... yippee skippee!");
+    }
+
     public void listen() throws UnknownHostException, IOException, InterruptedException {
         System.out.println("New peer joined: " + this.hostname);
-        addMember();
-        alertNeighbors();
+        if (this.hostname.equals("client")) {
+            handleClientJoin();
+        } else {
+            addMember();
+            alertNeighbors();
+        }
 
         while (true) {
             try {

@@ -20,8 +20,10 @@ public class Receiver extends Thread {
                     SingleHostReceiver shr = null;
                     if (this.type.equals("bootstrap")) {
                         shr = new BootstrapSHR((MyBootstrapState) state, s, hostname);
-                    } else {
+                    } else if (this.type.equals("peer")) {
                         shr = new PeerSHR((MyPeerState) state, s, hostname);
+                    } else {
+                        // TODO
                     }
                     shr.start();
                 }
