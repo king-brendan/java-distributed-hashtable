@@ -5,7 +5,6 @@ import java.net.UnknownHostException;
 
 import MessageTypes.Message;
 import MessageTypes.Neighbors;
-import MessageTypes.ObjStored;
 import MessageTypes.Pre;
 import MessageTypes.Request;
 import MessageTypes.Succ;

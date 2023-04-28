@@ -1,13 +1,16 @@
--- GENERAL --
-I unfortunately was not able to finish this project - only part 1 is working. 
-
 -- SYSTEM ARCHITECTURE --
-The general architecture of this project is similar to the previous, with a Receiver class
-that handles new connections and spawns SingleHostReceiver threads to manage individual messages.
-The Sender class still manages creating new connections.
+The general architecture of this project is similar to the previous, with a few changes to separate
+out logic between the Client, Peer, and Bootstrap server cases. Each server type gets its own main file,
+which spawns the appropriate Receiver, Sender, and SingleHostReceiver threads for that type (each type
+specified as a subclass of a generic class). I also created three new MyState types, one for each server
+type. Each of these are an implementation of the generic MyState class, which has some general-use fields.
+Each implementation has fields that are specific to that server type. 
+
+Other than that, the architecture is generally the same as my last project, the only differences being 
+custom logic for handling certain messages, and storing/retrieving data when appropriate.
 
 -- STATE DIAGRAM --
-See the attached PDF. It only includes the part that I finished, which is part 1.
+See the attached PDF.
 
 -- DESIGN DECISIONS --
 When designing this project, I tried to design it using Java patterns such that I could reuse 
@@ -16,14 +19,16 @@ distinction (but similar functionality) between bootstrap/peer/client servers. T
 created a few interfaces/abstract classes for multi-use classes (state, SingleHostReceiver) and 
 designed the main flow of the code to accept each type. I think that this reduced code clutter,
 but was also harder to design and more brittle when I needed to change something in one
-implementation of the interface/abstract class and not the other.
+implementation of the interface/abstract class and not the other. I ended up solving this problem
+by having only some shared fields between subtypes (e.g. the myHostname field in the MyState class),
+and having most of the server type-specific fields live in their appropriate subclasses.
 
 -- IMPLEMENTATION ISSUES --
 One issue I ran into was how Java doesn't allow for naming classes with dashes, meaning that I had 
-to change the testcase files to match the classnames I ended up using. This wasn't a huge issue.
+to change the testcase files to match the classnames I ended up using. This wasn't a huge issue, but
+means that you need to use the command line args exactly as specified in the README.
 
-Another issue I ran into was some ConcurrentModificationExceptions I kept running into, when I tried
-to access the same shared ArrayList from different threads. This was something I ran into in the previous
-projects with HashMaps, but I managed to avoid them by instead using an Iterator instance the loop 
-through items instead of the built-in for each. This time around, I solved by using the CopyOnWriteArrayList
-class instead of ArrayList, which solved my issues. 
+Another issue I ran into was general confusion between which SingleHostReceiver/MyState/etc server type
+I was working with, as for the previous project, there was only one of each. This created one especially
+gnarly bug where some of my logic for creating Senders was completely swapped between the Peer and Bootstrap
+versions of these classes (sad).

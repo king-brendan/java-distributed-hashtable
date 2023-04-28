@@ -10,3 +10,5 @@ docker build . -f BootstrapDockerfile -t prj5bootstrap && docker build . -f Peer
 
 Run the test files using:
 docker compose -f testcases/testcase-[TESTCASE_NUM]-prj5 up
+
+NOTE: please use the commands exactly as specified in this README - they differ from the project description.
